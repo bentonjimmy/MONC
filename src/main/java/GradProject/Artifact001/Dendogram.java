@@ -1,8 +1,11 @@
 package GradProject.Artifact001;
 
+import javax.swing.JPanel;
+
 public class Dendogram implements DrawGraph {
 
-	public void plotData() {
+	public JPanel plotData() {
+		return null;
 		// TODO Auto-generated method stub
 
 	}

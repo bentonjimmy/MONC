@@ -1,10 +1,18 @@
 package GradProject.Artifact001;
 
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Paint;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import org.apache.commons.collections15.Transformer;
+
+import edu.uci.ics.jung.algorithms.layout.CircleLayout;
+import edu.uci.ics.jung.algorithms.layout.Layout;
 import edu.uci.ics.jung.graph.Graph;
 import edu.uci.ics.jung.graph.SparseMultigraph;
+import edu.uci.ics.jung.visualization.VisualizationViewer;
 
 public class StaticGraphFactory implements GraphFactory {
 
@@ -12,22 +20,7 @@ public class StaticGraphFactory implements GraphFactory {
 	{
 		if(type.equalsIgnoreCase("network"))
 		{
-			Graph<DataNode, String> graph = new SparseMultigraph<DataNode, String>();
-			int i = 1;
-			
-			for(Node n : nodes)
-			{
-				Iterator<Integer> connectionsIterator;
-				connectionsIterator = ((DataNode) n).connectionsIterator();
-				while(connectionsIterator.hasNext())
-				{
-					Integer connection = connectionsIterator.next();
-					//Add an edge connecting n with all of the nodes it has connections with
-					graph.addEdge("Edge"+i, (DataNode)n, (DataNode)nodes.get(connection));
-					i++;
-				}
-			}
-			return null;
+			return new NetworkGraph(nodes);
 		}
 		else
 			return null;

@@ -1,7 +1,9 @@
 package GradProject.Artifact001;
 
+import javax.swing.JPanel;
+
 public interface DrawGraph {
 
-	public void plotData();
+	public JPanel plotData();
 	
 }

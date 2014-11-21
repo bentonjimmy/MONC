@@ -1,5 +1,6 @@
 package GradProject.Artifact001;
 
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -9,6 +10,7 @@ public class DataNode implements Node {
 	public DataNode()
 	{
 		pointsTo = new LinkedList<Integer>();
+		color = Color.RED;
 	}
 	
 	public DataNode(int id)
@@ -100,6 +102,12 @@ public class DataNode implements Node {
 	public void setLength(int length) {
 		this.length = length;
 	}
+	public Color getColor() {
+		return color;
+	}
+	public void setColor(Color c) {
+		color = c;
+	}
 	public String toString()
 	{
 		return "V"+id;
@@ -110,7 +118,7 @@ public class DataNode implements Node {
 	protected ArrayList<Integer> representsIDs;
 	protected int id;
 	protected String label;
-	//Color
+	protected Color color;
 	protected int border;
 	protected int diameter;
 	protected int length;
