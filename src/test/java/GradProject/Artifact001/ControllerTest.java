@@ -2,6 +2,7 @@ package GradProject.Artifact001;
 
 import static org.junit.Assert.*;
 
+import java.awt.Dimension;
 import java.util.ArrayList;
 
 import org.junit.Test;
@@ -12,7 +13,7 @@ public class ControllerTest {
 	public void singleNodeToModel()
 	{
 		SQLAdapter sqladapter = new SQLAdapter();
-		ViewController viewController = new ViewController();
+		ViewController viewController = new ViewController(new Dimension(300, 300));
 		Controller controller = new Controller(viewController, sqladapter);
 		StaticNodeFactory nodefactory = new StaticNodeFactory();
 		String type = "DataNode";
@@ -38,7 +39,7 @@ public class ControllerTest {
 		//Send multiple nodes
 		//Receive back nodes at lowest possible level
 		SQLAdapter sqladapter = new SQLAdapter();
-		ViewController viewController = new ViewController();
+		ViewController viewController = new ViewController(new Dimension(300, 300));
 		Controller controller = new Controller(viewController, sqladapter);
 		
 		StaticNodeFactory nodefactory = new StaticNodeFactory();

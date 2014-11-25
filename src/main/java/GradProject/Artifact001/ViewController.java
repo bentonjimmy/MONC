@@ -1,9 +1,52 @@
 package GradProject.Artifact001;
 
+import java.awt.Dimension;
 import java.util.ArrayList;
 
-public class ViewController {
-	
-	public void updateView(ArrayList<Node> nodes){}
+import javax.swing.JPanel;
 
+public class ViewController 
+{
+	private Dimension dim;
+	private StaticGraphFactory gf;
+	private ArrayList<Node> nodes;
+	private String style;
+	private int nid = -1;
+	private Controller controller;
+	private JPanel thePanel;
+	
+	public ViewController(Dimension dim)
+	{
+		this.dim = dim;
+		gf = new StaticGraphFactory();
+		style = "network";
+	}
+	
+	
+	//Retrieving the graph for a new node
+	public JPanel updateView(int nodeID, String style)
+	{
+		if(nodeID != nid) //Retrieve new data
+		{
+			DataNode dn = new DataNode(nodeID);
+			nodes = controller.updateModel(dn, "Retrieve");
+			changeGraph(style);
+		}
+		else //We are already using this node
+		{
+			System.out.println("ViewController: Already using node " + nodeID);
+		}
+		return thePanel;
+	}
+	
+	//Changing from one graph to another
+	public JPanel changeGraph(String style)
+	{
+		this.style = style;
+		System.out.println("ViewController: Changing graph type to: " + style);
+		DrawGraph graph = gf.makeGraph(nodes, this.style);
+		thePanel = graph.plotData();
+		return thePanel;
+	}
+	
 }

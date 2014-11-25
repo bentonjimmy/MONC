@@ -14,7 +14,8 @@ import edu.uci.ics.jung.graph.Graph;
 import edu.uci.ics.jung.graph.SparseMultigraph;
 import edu.uci.ics.jung.visualization.VisualizationViewer;
 
-public class StaticGraphFactory implements GraphFactory {
+public class StaticGraphFactory implements GraphFactory 
+{
 
 	public DrawGraph makeGraph(ArrayList<Node> nodes, String type) 
 	{
