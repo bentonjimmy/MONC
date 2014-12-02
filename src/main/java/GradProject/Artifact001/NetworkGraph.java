@@ -30,11 +30,11 @@ public class NetworkGraph implements DrawGraph {
 		
 		for(Node n : nodes)//loop through all nodes
 		{
-			Iterator<Integer> connectionsIterator;
+			Iterator<Long> connectionsIterator;
 			connectionsIterator = ((DataNode) n).connectionsIterator();
 			while(connectionsIterator.hasNext())
 			{
-				Integer connection = connectionsIterator.next();
+				Long connection = connectionsIterator.next();
 				//Add an edge connecting n with all of the nodes it has connections with
 				if(((DataNode)n).getId() < connection)
 				{

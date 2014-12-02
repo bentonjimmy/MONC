@@ -1,6 +1,7 @@
 package GradProject.Artifact001;
 
-public interface DBController {
+public interface DBController 
+{
 	
 	//public void select();
 	//public void update();

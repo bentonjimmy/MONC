@@ -38,9 +38,9 @@ public class StaticNodeFactoryTest {
 		parameters.setId(2);
 		parameters.setLabel("Test2");
 		parameters.setRepresents(2);
-		ArrayList<Integer> integers = new ArrayList<Integer>();
-		integers.add(1);
-		integers.add(2); //Should not be able to store itself in the list
+		ArrayList<Long> integers = new ArrayList<Long>();
+		integers.add(1L);
+		integers.add(2L); //Should not be able to store itself in the list
 		parameters.setRepresentsIDs(integers);
 		
 		DataNode t2 = (DataNode) nodefactory.makeNode(type, parameters);
@@ -103,7 +103,7 @@ public class StaticNodeFactoryTest {
 		assertTrue("sending1 - test IDs of nodes represented size", sending1.getRepresentsIDs().size() == 25);
 		//Check the IDs of the nodes received
 		int testID = 2;
-		for(Integer ints:sending1.getRepresentsIDs())
+		for(Long ints:sending1.getRepresentsIDs())
 		{
 			assertTrue("Test IDs Received", ints.intValue() == testID);
 			testID++;

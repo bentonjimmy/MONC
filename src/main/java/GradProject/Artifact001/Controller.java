@@ -2,18 +2,22 @@ package GradProject.Artifact001;
 
 import java.util.ArrayList;
 
-public class Controller {
+public class Controller 
+{
+	private SQLAdapter sa;
+	private ViewController vc;
 	
 	public Controller(ViewController vc, SQLAdapter sa)
 	{
-		
+		this.vc = vc;
+		this.sa = sa;
 	}
 	
 	public void updateView(ArrayList<Node> nodelist){}
 	
 	public ArrayList<Node> updateModel(Node node, String action)
 	{
-		return null;
+		return sa.drillDown(node);
 	}
 	
 	public boolean refreshView() //do i need this?

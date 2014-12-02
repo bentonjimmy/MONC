@@ -9,16 +9,17 @@ public class StaticNodeFactory implements NodeFactory {
 		nextID = 1;
 	}
 
-	public Node makeNode(String type) {
+	public Node makeNode(String type) 
+	{
 		if(type != null)
 		{
 			if(type.equalsIgnoreCase("datanode"))
 			{
 				DataNode dn = new DataNode();
 				dn.setId(nextID);
-				dn.setLabel(Integer.toString(nextID));
+				dn.setLabel(Long.toString(nextID));
 				dn.setRepresents(1);
-				ArrayList<Integer> represents = new ArrayList<Integer>();
+				ArrayList<Long> represents = new ArrayList<Long>();
 				dn.setRepresentsIDs(represents);
 				updateNextID(dn.getId());
 				
@@ -38,7 +39,7 @@ public class StaticNodeFactory implements NodeFactory {
 				dn.setId(params.getId());
 				dn.setLabel(params.getLabel());
 				dn.setRepresents(params.getRepresents());
-				ArrayList<Integer> represents = new ArrayList<Integer>();
+				ArrayList<Long> represents = new ArrayList<Long>();
 				if(params.getRepresents() > 1)
 				{
 					if(params.getRepresentsIDs() != null)
@@ -82,7 +83,7 @@ public class StaticNodeFactory implements NodeFactory {
 		return null;
 	}
 	
-	private  void updateNextID(int id)
+	private  void updateNextID(long id)
 	{
 		if(id >= nextID)
 		{
@@ -90,6 +91,6 @@ public class StaticNodeFactory implements NodeFactory {
 		}
 	}
 
-	private static int nextID; //looks at all created and received requests for nodes, changes next to one more than largest seen
+	private static long nextID; //looks at all created and received requests for nodes, changes next to one more than largest seen
 
 }

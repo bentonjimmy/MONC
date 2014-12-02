@@ -9,7 +9,7 @@ public class DataNode implements Node {
 	
 	public DataNode()
 	{
-		pointsTo = new LinkedList<Integer>();
+		pointsTo = new LinkedList<Long>();
 		color = Color.RED;
 	}
 	
@@ -27,7 +27,7 @@ public class DataNode implements Node {
 		this.label = label;
 	}
 	
-	public void addConnection(Integer connection)
+	public void addConnection(Long connection)
 	{
 		if(connection != null)
 		{
@@ -35,7 +35,7 @@ public class DataNode implements Node {
 		}
 	}
 	
-	public void setConnections(LinkedList<Integer> connections)
+	public void setConnections(LinkedList<Long> connections)
 	{
 		if(connections != null)
 		{
@@ -43,7 +43,7 @@ public class DataNode implements Node {
 		}
 	}
 	
-	public Iterator<Integer> connectionsIterator()
+	public Iterator<Long> connectionsIterator()
 	{
 		return pointsTo.iterator();
 	}
@@ -66,16 +66,16 @@ public class DataNode implements Node {
 	public void setRepresents(int represents) {
 		this.represents = represents;
 	}
-	public ArrayList<Integer> getRepresentsIDs() {
+	public ArrayList<Long> getRepresentsIDs() {
 		return representsIDs;
 	}
-	public void setRepresentsIDs(ArrayList<Integer> representsIDs) {
+	public void setRepresentsIDs(ArrayList<Long> representsIDs) {
 		this.representsIDs = representsIDs;
 	}
-	public int getId() {
+	public long getId() {
 		return id;
 	}
-	public void setId(int id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 	public String getLabel() {
@@ -115,13 +115,13 @@ public class DataNode implements Node {
 	protected int x;
 	protected int y;
 	protected int represents;
-	protected ArrayList<Integer> representsIDs;
-	protected int id;
+	protected ArrayList<Long> representsIDs;
+	protected long id;
 	protected String label;
 	protected Color color;
 	protected int border;
 	protected int diameter;
 	protected int length;
-	protected LinkedList<Integer> pointsTo;
+	protected LinkedList<Long> pointsTo;
 	
 }

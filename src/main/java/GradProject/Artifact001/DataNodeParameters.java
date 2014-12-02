@@ -54,19 +54,19 @@ public class DataNodeParameters implements Parameters{
 		this._represents = represents;
 	}
 
-	public ArrayList<Integer> getRepresentsIDs() {
+	public ArrayList<Long> getRepresentsIDs() {
 		return _representsIDs;
 	}
 
-	public void setRepresentsIDs(ArrayList<Integer> representsIDs) {
+	public void setRepresentsIDs(ArrayList<Long> representsIDs) {
 		this._representsIDs = representsIDs;
 	}
 	
-	public int getId() {
+	public long getId() {
 		return _id;
 	}
 
-	public void setId(int id) {
+	public void setId(long id) {
 		this._id = id;
 	}
 
@@ -80,8 +80,8 @@ public class DataNodeParameters implements Parameters{
 
 	private HashMap<String, String> _parameters;
 	private int _represents;
-	private ArrayList<Integer> _representsIDs;
-	private int _id;
+	private ArrayList<Long> _representsIDs;
+	private long _id;
 	private String _label;
 
 }

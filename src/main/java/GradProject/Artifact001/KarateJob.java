@@ -22,22 +22,23 @@ import org.apache.hadoop.mapreduce.lib.output.MultipleOutputs;
 import org.apache.hadoop.mapreduce.lib.output.SequenceFileOutputFormat;
 import org.apache.hadoop.mapreduce.lib.output.TextOutputFormat;
 
-public class KarateJob {
+public class KarateJob 
+{
 	
 	 private static final Log LOG = LogFactory.getLog(KarateJob.class);
-	 private LinkedHashMap<Long, Double> lhm;
-	 private LinkedHashMap<Long, LinkedList<Long>> nodeList;
-
-	 public static void main(String[] args) 
+	 //private LinkedHashMap<Long, Double> lhm;
+	 //private LinkedHashMap<Long, LinkedList<Long>> nodeList;
+ 
+	 public void runJob(long growthnode, LinkedHashMap<Long, Double> lhm, LinkedHashMap<Long, LinkedList<Long>> nodeList)
      {
-		 KarateJob kj = new KarateJob();
 		 int depth = 0;
 		 String outpath = new String("/Users/jmb66/Documents/NJIT/GradProject/DataSets/KarateClub/depth_");
 		 
-		 try {
-			depth = kj.runJob(outpath);
-			kj.parseFirstResults("/Users/jmb66/Documents/NJIT/GradProject/DataSets/KarateClub");
-			kj.parseResults(depth, outpath);
+		try 
+		{
+			depth = hadoopJob(growthnode, outpath);
+			parseFirstResults("/Users/jmb66/Documents/NJIT/GradProject/DataSets/KarateClub", nodeList);
+			parseResults(depth, outpath, lhm);
 		} catch (ClassNotFoundException | IOException | InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -46,17 +47,18 @@ public class KarateJob {
 		 System.out.println("depth is: " + depth);
      }
 	 
-	 protected void parseFirstResults(String path)
+	 protected void parseFirstResults(String path, LinkedHashMap<Long, LinkedList<Long>> nodeList)
 	 {
 		 String line;
 		 char[] charResults;
 		 
-		 nodeList = new LinkedHashMap<Long, LinkedList<Long>>();
+		 //nodeList = new LinkedHashMap<Long, LinkedList<Long>>();
 		 
-		 try {
+		 try 
+		 {
 			//open file
 			BufferedReader in = new BufferedReader(new FileReader(path+"/text-r-00000"));
-			nodeList = new LinkedHashMap<Long, LinkedList<Long>>();
+			//nodeList = new LinkedHashMap<Long, LinkedList<Long>>();
 			while((line = in.readLine()) != null)
 			{
 				LinkedList<Long> pointsTo = new LinkedList<Long>();
@@ -91,17 +93,18 @@ public class KarateJob {
 				}
 				nodeList.put(nodeID, pointsTo);
 			}
+			in.close();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	 }
 	 
-	 protected void parseResults(int depth, String outpath)
+	 protected void parseResults(int depth, String outpath, LinkedHashMap<Long, Double> lhm)
 	 {
 		 String line;
 		 char[] charResults;
-		 lhm = new LinkedHashMap<Long, Double>();
+		 //lhm = new LinkedHashMap<Long, Double>();
 		 
 		 try {
 			//open file
@@ -126,6 +129,7 @@ public class KarateJob {
 				}
 				lhm.put(Long.valueOf(nodeAndResult[0]), Double.valueOf(nodeAndResult[1]));
 			}
+			in.close();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -135,14 +139,14 @@ public class KarateJob {
 		 
 	 }
 	 
-	 public int runJob(String outpath) throws IOException,
+	 protected int hadoopJob(long growthnode, String outpath) throws IOException,
      InterruptedException, ClassNotFoundException 
 	 {
 		 int depth = 1;
 
 		 Configuration conf = new Configuration();
          conf.set("recursion.depth", depth + "");
-         conf.set("growthnode", "3");
+         conf.set("growthnode", Long.toString(growthnode));
          Job job = new Job(conf);
          job.setJobName("Karate Club");
 
