@@ -5,12 +5,13 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.Set;
+import java.util.TreeMap;
 
 public class HadoopController implements DBController 
 {
 	private KarateJob job;
 	private LinkedHashMap<Long, Double> resolutionOrder;
-	private LinkedHashMap<Long, LinkedList<Long>> networkList;
+	private TreeMap<Long, ResultsHolder> networkList;
 	
 	private static StaticNodeFactory factory;
 	
@@ -18,7 +19,7 @@ public class HadoopController implements DBController
 	{
 		job = new KarateJob();
 		resolutionOrder = new LinkedHashMap<Long, Double>();
-		networkList = new LinkedHashMap<Long, LinkedList<Long>>();
+		networkList = new TreeMap<Long, ResultsHolder>();
 		factory = new StaticNodeFactory();
 	}
 	
@@ -36,8 +37,13 @@ public class HadoopController implements DBController
 		{
 			increment = Math.floorDiv(255, networkSize);
 		}
+		else
+		{
+			increment = 1;
+		}
 		//transform results into ArrayList<Node> using StaticNodeFactory
-		Set<Long> ls = networkList.keySet();
+		Set<Long> ls = networkList.keySet();//Should be in ascending order
+
 		for(Long l: ls)
 		{
 			//Create a data node
@@ -46,7 +52,8 @@ public class HadoopController implements DBController
 			DataNode dn = (DataNode) factory.makeNode("datanode", parameters);
 			
 			//Add the node's connections
-			LinkedList<Long> nodeConnections = networkList.get(l);
+			ResultsHolder rh = networkList.get(l);
+			LinkedList<Long> nodeConnections = rh.getPointsTo();
 			for(Long connect: nodeConnections)
 			{
 				dn.addConnection(connect);
@@ -58,7 +65,7 @@ public class HadoopController implements DBController
 			}
 			else
 			{
-				dn.setColor(Color.WHITE);
+				dn.setColor(new Color(255, (l*increment), (l*increment)));
 			}
 			
 			results.add(dn);

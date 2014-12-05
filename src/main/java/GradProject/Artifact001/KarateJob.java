@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.StringTokenizer;
+import java.util.TreeMap;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -29,7 +30,7 @@ public class KarateJob
 	 //private LinkedHashMap<Long, Double> lhm;
 	 //private LinkedHashMap<Long, LinkedList<Long>> nodeList;
  
-	 public void runJob(long growthnode, LinkedHashMap<Long, Double> lhm, LinkedHashMap<Long, LinkedList<Long>> nodeList)
+	 public void runJob(long growthnode, LinkedHashMap<Long, Double> lhm, TreeMap<Long, ResultsHolder> nodeList)
      {
 		 int depth = 0;
 		 String outpath = new String("/Users/jmb66/Documents/NJIT/GradProject/DataSets/KarateClub/depth_");
@@ -38,7 +39,7 @@ public class KarateJob
 		{
 			depth = hadoopJob(growthnode, outpath);
 			parseFirstResults("/Users/jmb66/Documents/NJIT/GradProject/DataSets/KarateClub", nodeList);
-			parseResults(depth, outpath, lhm);
+			parseResults(depth, outpath, lhm, nodeList);
 		} catch (ClassNotFoundException | IOException | InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -47,7 +48,7 @@ public class KarateJob
 		 System.out.println("depth is: " + depth);
      }
 	 
-	 protected void parseFirstResults(String path, LinkedHashMap<Long, LinkedList<Long>> nodeList)
+	 protected void parseFirstResults(String path, TreeMap<Long, ResultsHolder> nodeList)
 	 {
 		 String line;
 		 char[] charResults;
@@ -61,7 +62,8 @@ public class KarateJob
 			//nodeList = new LinkedHashMap<Long, LinkedList<Long>>();
 			while((line = in.readLine()) != null)
 			{
-				LinkedList<Long> pointsTo = new LinkedList<Long>();
+				ResultsHolder rh = new ResultsHolder();
+				//LinkedList<Long> pointsTo = new LinkedList<Long>();
 				//read one line
 				
 				//get the node ID
@@ -88,10 +90,11 @@ public class KarateJob
 					//[1] is 0 when it is pointing to itself
 					if(Integer.valueOf(nodeAndResult[1]) != 0)
 					{
-						pointsTo.add(Long.valueOf(nodeAndResult[0]));
+						//pointsTo.add(Long.valueOf(nodeAndResult[0]));
+						rh.addPoint(Long.valueOf(nodeAndResult[0]));
 					}
 				}
-				nodeList.put(nodeID, pointsTo);
+				nodeList.put(nodeID, rh);
 			}
 			in.close();
 		} catch (IOException e) {
@@ -100,7 +103,7 @@ public class KarateJob
 		}
 	 }
 	 
-	 protected void parseResults(int depth, String outpath, LinkedHashMap<Long, Double> lhm)
+	 protected void parseResults(int depth, String outpath, LinkedHashMap<Long, Double> lhm, TreeMap<Long, ResultsHolder> nodeList)
 	 {
 		 String line;
 		 char[] charResults;
@@ -120,6 +123,7 @@ public class KarateJob
 			String delim1 = ", ";
 			String equals = "=";
 			StringTokenizer commaDelim = new StringTokenizer(stringResults, delim1);
+			int order = 1;
 			while(commaDelim.hasMoreTokens())
 			{
 				String[] nodeAndResult = commaDelim.nextToken().split(equals);
@@ -127,7 +131,12 @@ public class KarateJob
 				{
 					System.err.println("Malformed results!");
 				}
-				lhm.put(Long.valueOf(nodeAndResult[0]), Double.valueOf(nodeAndResult[1]));
+				ResultsHolder rh = nodeList.get(Long.valueOf(nodeAndResult[0]));
+				rh.setResolution(Double.valueOf(nodeAndResult[1]));
+				rh.setOrder(order);
+				nodeList.put(Long.valueOf(nodeAndResult[0]), rh);
+				//lhm.put(Long.valueOf(nodeAndResult[0]), Double.valueOf(nodeAndResult[1]));
+				order++;
 			}
 			in.close();
 		} catch (IOException e) {

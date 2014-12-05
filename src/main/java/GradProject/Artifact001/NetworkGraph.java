@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Paint;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.Set;
 
 import javax.swing.JPanel;
 
@@ -30,15 +31,17 @@ public class NetworkGraph implements DrawGraph {
 		
 		for(Node n : nodes)//loop through all nodes
 		{
-			Iterator<Long> connectionsIterator;
-			connectionsIterator = ((DataNode) n).connectionsIterator();
-			while(connectionsIterator.hasNext())
+			Iterator<Integer> connectionsSet;
+			connectionsSet = ((DataNode) n).connectionsIterator();
+			//Iterate through all the connections node n has
+			while(connectionsSet.hasNext())
 			{
-				Long connection = connectionsIterator.next();
+				Integer position = connectionsSet.next();
+				long dn = ((DataNode)n).getConnection(position);
 				//Add an edge connecting n with all of the nodes it has connections with
-				if(((DataNode)n).getId() < connection)
+				if(((DataNode)n).getId() < dn) //Only create a connection between nodes once
 				{
-					graph.addEdge("Edge"+i, (DataNode)n, (DataNode)nodes.get(connection));
+					graph.addEdge("Edge"+i, (DataNode)n, (DataNode) nodes.get((int) dn));
 					i++;
 				}
 			}

@@ -3,39 +3,45 @@ package GradProject.Artifact001;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.LinkedList;
+import java.util.Set;
 
 public class DataNode implements Node {
 	
 	public DataNode()
 	{
-		pointsTo = new LinkedList<Long>();
+		pointsTo = new LinkedHashMap<Integer, Long>();
 		color = Color.RED;
+		pointsToNum = 1;
 	}
 	
-	public DataNode(int id)
+	public DataNode(long id)
 	{
 		this();
 		this.id = id;
-		this.label = Integer.toString(id);
+		this.label = Long.toString(id);
 	}
 	
-	public DataNode(int id, String label)
+	public DataNode(long id, String label)
 	{
 		this();
 		this.id = id;
 		this.label = label;
 	}
 	
-	public void addConnection(Long connection)
+	public void addConnection(long connection)
 	{
-		if(connection != null)
-		{
-			pointsTo.add(connection);
-		}
+			pointsTo.put(pointsToNum, connection);
+			pointsToNum++;
 	}
 	
-	public void setConnections(LinkedList<Long> connections)
+	public long getConnection(Integer position)
+	{
+		return pointsTo.get(position);
+	}
+	
+	public void setConnections(LinkedHashMap<Integer, Long> connections)
 	{
 		if(connections != null)
 		{
@@ -43,23 +49,12 @@ public class DataNode implements Node {
 		}
 	}
 	
-	public Iterator<Long> connectionsIterator()
+	public Iterator<Integer> connectionsIterator()
 	{
-		return pointsTo.iterator();
+		Set<Integer> iSet = pointsTo.keySet();
+		return iSet.iterator();
 	}
 	
-	public int getX() {
-		return x;
-	}
-	public void setX(int x) {
-		this.x = x;
-	}
-	public int getY() {
-		return y;
-	}
-	public void setY(int y) {
-		this.y = y;
-	}
 	public int getRepresents() {
 		return represents;
 	}
@@ -84,24 +79,6 @@ public class DataNode implements Node {
 	public void setLabel(String label) {
 		this.label = label;
 	}
-	public int getBorder() {
-		return border;
-	}
-	public void setBorder(int border) {
-		this.border = border;
-	}
-	public int getDiameter() {
-		return diameter;
-	}
-	public void setDiameter(int diameter) {
-		this.diameter = diameter;
-	}
-	public int getLength() {
-		return length;
-	}
-	public void setLength(int length) {
-		this.length = length;
-	}
 	public Color getColor() {
 		return color;
 	}
@@ -112,16 +89,13 @@ public class DataNode implements Node {
 	{
 		return "V"+id;
 	}
-	protected int x;
-	protected int y;
+	
 	protected int represents;
 	protected ArrayList<Long> representsIDs;
 	protected long id;
 	protected String label;
 	protected Color color;
-	protected int border;
-	protected int diameter;
-	protected int length;
-	protected LinkedList<Long> pointsTo;
+	protected LinkedHashMap<Integer, Long> pointsTo;
+	private int pointsToNum;
 	
 }
