@@ -17,7 +17,7 @@ public class HadoopController implements DBController
 	
 	public HadoopController()
 	{
-		job = new KarateJob();
+		job = new KarateJob("/Users/jmb66/Documents/NJIT/GradProject/DataSets/KarateClub", "zachary_unweighted.txt");
 		resolutionOrder = new LinkedHashMap<Long, Double>();
 		networkList = new TreeMap<Long, ResultsHolder>();
 		factory = new StaticNodeFactory();
@@ -27,6 +27,8 @@ public class HadoopController implements DBController
 	{
 		ArrayList<Node> results = new ArrayList<Node>();
 		int increment;
+		DataNode dummy = new DataNode(0);
+		results.add(dummy);//Add dummy so that nodes are added starting at position 1
 		long growthnode = ((DataNode) node).getId();
 		job.runJob(growthnode, resolutionOrder, networkList);
 		
@@ -65,9 +67,10 @@ public class HadoopController implements DBController
 			}
 			else
 			{
-				dn.setColor(new Color(255, (l*increment), (l*increment)));
+				dn.setColor(new Color(255, (rh.getOrder()*increment), (rh.getOrder()*increment)));
 			}
-			
+			//set the node's resolution
+			dn.setResolution(rh.getResolution());
 			results.add(dn);
 		}
 		

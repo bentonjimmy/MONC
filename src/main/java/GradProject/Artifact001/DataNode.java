@@ -90,10 +90,19 @@ public class DataNode implements Node {
 		return "V"+id;
 	}
 	
+	public double getResolution() {
+		return resolution;
+	}
+
+	public void setResolution(double resolution) {
+		this.resolution = resolution;
+	}
+
 	protected int represents;
 	protected ArrayList<Long> representsIDs;
 	protected long id;
 	protected String label;
+	protected double resolution;
 	protected Color color;
 	protected LinkedHashMap<Integer, Long> pointsTo;
 	private int pointsToNum;

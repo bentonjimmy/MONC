@@ -50,6 +50,8 @@ public class KarateReducer extends Reducer<GrowthNode, VertexWritable, GrowthNod
 				{
 					VertexWritable growthVertex = vertex.clone();
 					growthNode = new GrowthNode(growthVertex);
+					vertex.setActivated(true);
+					vertices.add(new VertexWritable(vertex));
 				}
 				else
 				{
@@ -62,7 +64,10 @@ public class KarateReducer extends Reducer<GrowthNode, VertexWritable, GrowthNod
 			{
 				if(vertex.isActivated())
 				{
-					multiOut.write("seq", growthNode, vertex);
+					if(vertex.getMinimalVertexId().get() != growthNode.getVertexId().get())
+					{
+						multiOut.write("seq", growthNode, vertex);
+					}
 					multiOut.write("text", growthNode, vertex, "/Users/jmb66/Documents/NJIT/GradProject/DataSets/KarateClub/text");
 					//multiOut.write("text", growthNode, vertex);
 					//context.write(growthNode, vertex);

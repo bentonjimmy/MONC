@@ -26,19 +26,26 @@ import org.apache.hadoop.mapreduce.lib.output.TextOutputFormat;
 public class KarateJob 
 {
 	
-	 private static final Log LOG = LogFactory.getLog(KarateJob.class);
+	private String filepath, filename;
+	private static final Log LOG = LogFactory.getLog(KarateJob.class);
 	 //private LinkedHashMap<Long, Double> lhm;
 	 //private LinkedHashMap<Long, LinkedList<Long>> nodeList;
  
+	 public KarateJob(String path, String filename)
+	 {
+		 this.filepath = path;
+		 this.filename = filename;
+	 }
+	 
 	 public void runJob(long growthnode, LinkedHashMap<Long, Double> lhm, TreeMap<Long, ResultsHolder> nodeList)
      {
 		 int depth = 0;
-		 String outpath = new String("/Users/jmb66/Documents/NJIT/GradProject/DataSets/KarateClub/depth_");
+		 String outpath = new String(filepath+"/depth_");
 		 
 		try 
 		{
 			depth = hadoopJob(growthnode, outpath);
-			parseFirstResults("/Users/jmb66/Documents/NJIT/GradProject/DataSets/KarateClub", nodeList);
+			parseFirstResults(filepath, nodeList);
 			parseResults(depth, outpath, lhm, nodeList);
 		} catch (ClassNotFoundException | IOException | InterruptedException e) {
 			// TODO Auto-generated catch block
@@ -123,7 +130,7 @@ public class KarateJob
 			String delim1 = ", ";
 			String equals = "=";
 			StringTokenizer commaDelim = new StringTokenizer(stringResults, delim1);
-			int order = 1;
+			int order = 0;
 			while(commaDelim.hasMoreTokens())
 			{
 				String[] nodeAndResult = commaDelim.nextToken().split(equals);
@@ -163,7 +170,7 @@ public class KarateJob
          job.setReducerClass(KarateReducer.class);
          job.setJarByClass(DataImporter.class);
 
-         Path in = new Path("/Users/jmb66/Documents/NJIT/GradProject/DataSets/KarateClub/zachary_unweighted.txt");
+         Path in = new Path(filepath+"/"+filename);
          //Path out = new Path("/Users/jmb66/Documents/NJIT/GradProject/DataSets/KarateClub/depth_1");
          Path out = new Path(outpath + depth);
          
@@ -203,7 +210,7 @@ public class KarateJob
                  job.setReducerClass(KarateReducer.class);
                  job.setJarByClass(KarateMapper.class);
 
-                 in = new Path("/Users/jmb66/Documents/NJIT/GradProject/DataSets/KarateClub/depth_" + (depth - 1) + "/");
+                 in = new Path(filepath+"/depth_" + (depth - 1) + "/");
                  //out = new Path("/Users/jmb66/Documents/NJIT/GradProject/DataSets/KarateClub/depth_" + depth);
                  out = new Path(outpath + depth);
                  
