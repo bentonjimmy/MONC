@@ -14,7 +14,7 @@ public class SQLAdapter
 	public ArrayList<Node> drillDown(Node node)
 	{
 		ArrayList<Node> nodes;
-		nodes = controller.run(node);
+		nodes = controller.run(node, "/Users/jmb66/Documents/NJIT/GradProject/DataSets/KarateClub", "zachary_unweighted.txt");
 		
 		return nodes;
 	}

@@ -60,15 +60,8 @@ public class DataImporter extends Mapper<LongWritable, Text, GrowthNode, VertexW
 		fillerVertex.setKtot(new LongWritable(totalweight));
 		fillerVertex.setIncl(new DoubleWritable(0));
 		GrowthNode fillerNode = new GrowthNode(fillerVertex);
-		//multiOut.write("seq", fillerNode, vertex);
-		//multiOut.write("text", fillerNode, vertex);
 		context.write(fillerNode, vertex); //output the Node and its VertexWritable
-		/*
-		for(LongWritable lw : vertex.pointsTo.keySet())
-		{
-			context.write(lw, vertex.makeMessage());
-		}
-		*/
+		
 	}
 	
 	protected void cleanup(Context context) throws IOException, InterruptedException 

@@ -15,10 +15,9 @@ public class KarateJobTest {
 	{
 		KarateJob kj = new KarateJob("/Users/jmb66/Documents/NJIT/GradProject/DataSets/KarateClub", "zachary_unweighted.txt");
 		int node = 3;
-		LinkedHashMap<Long, Double> lhm = new LinkedHashMap<Long, Double>();
 		TreeMap<Long, ResultsHolder> nodeList = new TreeMap<Long, ResultsHolder>();
 		
-		kj.runJob(node, lhm, nodeList);
+		kj.runJob(node, nodeList);
 		assertTrue("Test nodeList size", nodeList.size() == 34);
 	}
 

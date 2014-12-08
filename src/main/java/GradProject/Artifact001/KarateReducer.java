@@ -69,8 +69,7 @@ public class KarateReducer extends Reducer<GrowthNode, VertexWritable, GrowthNod
 						multiOut.write("seq", growthNode, vertex);
 					}
 					multiOut.write("text", growthNode, vertex, "/Users/jmb66/Documents/NJIT/GradProject/DataSets/KarateClub/text");
-					//multiOut.write("text", growthNode, vertex);
-					//context.write(growthNode, vertex);
+
 					LOG.info(growthNode + " | " + vertex);
 				}
 			}
@@ -133,7 +132,6 @@ public class KarateReducer extends Reducer<GrowthNode, VertexWritable, GrowthNod
 						if(vertex.isActivated())
 						{
 							multiOut.write("seq", key, vertex);
-							//context.write(key, vertex);
 							LOG.info(key + " | " + vertex);
 						}
 					}

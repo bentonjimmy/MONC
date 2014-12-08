@@ -17,12 +17,11 @@ public class Controller
 	
 	public ArrayList<Node> updateModel(Node node, String action)
 	{
-		return sa.drillDown(node);
-	}
-	
-	public boolean refreshView() //do i need this?
-	{
-		return false;
+		if(action.equalsIgnoreCase("retrieve"))
+		{
+			return sa.drillDown(node);
+		}
+		return null;
 	}
 
 }

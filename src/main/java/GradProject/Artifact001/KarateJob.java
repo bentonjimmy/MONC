@@ -28,8 +28,6 @@ public class KarateJob
 	
 	private String filepath, filename;
 	private static final Log LOG = LogFactory.getLog(KarateJob.class);
-	 //private LinkedHashMap<Long, Double> lhm;
-	 //private LinkedHashMap<Long, LinkedList<Long>> nodeList;
  
 	 public KarateJob(String path, String filename)
 	 {
@@ -37,7 +35,7 @@ public class KarateJob
 		 this.filename = filename;
 	 }
 	 
-	 public void runJob(long growthnode, LinkedHashMap<Long, Double> lhm, TreeMap<Long, ResultsHolder> nodeList)
+	 public void runJob(long growthnode, TreeMap<Long, ResultsHolder> nodeList)
      {
 		 int depth = 0;
 		 String outpath = new String(filepath+"/depth_");
@@ -46,7 +44,7 @@ public class KarateJob
 		{
 			depth = hadoopJob(growthnode, outpath);
 			parseFirstResults(filepath, nodeList);
-			parseResults(depth, outpath, lhm, nodeList);
+			parseResults(depth, outpath, nodeList);
 		} catch (ClassNotFoundException | IOException | InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -60,18 +58,14 @@ public class KarateJob
 		 String line;
 		 char[] charResults;
 		 
-		 //nodeList = new LinkedHashMap<Long, LinkedList<Long>>();
-		 
 		 try 
 		 {
 			//open file
 			BufferedReader in = new BufferedReader(new FileReader(path+"/text-r-00000"));
-			//nodeList = new LinkedHashMap<Long, LinkedList<Long>>();
+			//read one line
 			while((line = in.readLine()) != null)
 			{
 				ResultsHolder rh = new ResultsHolder();
-				//LinkedList<Long> pointsTo = new LinkedList<Long>();
-				//read one line
 				
 				//get the node ID
 				int vertexEquals = line.indexOf("=", line.indexOf("]"));
@@ -97,7 +91,6 @@ public class KarateJob
 					//[1] is 0 when it is pointing to itself
 					if(Integer.valueOf(nodeAndResult[1]) != 0)
 					{
-						//pointsTo.add(Long.valueOf(nodeAndResult[0]));
 						rh.addPoint(Long.valueOf(nodeAndResult[0]));
 					}
 				}
@@ -110,11 +103,10 @@ public class KarateJob
 		}
 	 }
 	 
-	 protected void parseResults(int depth, String outpath, LinkedHashMap<Long, Double> lhm, TreeMap<Long, ResultsHolder> nodeList)
+	 protected void parseResults(int depth, String outpath, TreeMap<Long, ResultsHolder> nodeList)
 	 {
 		 String line;
 		 char[] charResults;
-		 //lhm = new LinkedHashMap<Long, Double>();
 		 
 		 try {
 			//open file
@@ -142,7 +134,6 @@ public class KarateJob
 				rh.setResolution(Double.valueOf(nodeAndResult[1]));
 				rh.setOrder(order);
 				nodeList.put(Long.valueOf(nodeAndResult[0]), rh);
-				//lhm.put(Long.valueOf(nodeAndResult[0]), Double.valueOf(nodeAndResult[1]));
 				order++;
 			}
 			in.close();
@@ -171,7 +162,6 @@ public class KarateJob
          job.setJarByClass(DataImporter.class);
 
          Path in = new Path(filepath+"/"+filename);
-         //Path out = new Path("/Users/jmb66/Documents/NJIT/GradProject/DataSets/KarateClub/depth_1");
          Path out = new Path(outpath + depth);
          
          FileInputFormat.addInputPath(job, in);
@@ -179,14 +169,11 @@ public class KarateJob
          if (fs.exists(out))
                  fs.delete(out, true);
 
-         //SequenceFileOutputFormat.setOutputPath(job, out);
          FileOutputFormat.setOutputPath(job, out);
-         //FileInputFormat.setInputPaths(job, in);
          
          job.setInputFormatClass(TextInputFormat.class);
          
          job.setOutputFormatClass(SequenceFileOutputFormat.class);
-         //job.setOutputFormatClass(TextOutputFormat.class);
          job.setOutputKeyClass(GrowthNode.class);
          job.setOutputValueClass(VertexWritable.class);
          
@@ -211,22 +198,17 @@ public class KarateJob
                  job.setJarByClass(KarateMapper.class);
 
                  in = new Path(filepath+"/depth_" + (depth - 1) + "/");
-                 //out = new Path("/Users/jmb66/Documents/NJIT/GradProject/DataSets/KarateClub/depth_" + depth);
                  out = new Path(outpath + depth);
                  
-                 //SequenceFileInputFormat.addInputPath(job, in);
                  if (fs.exists(out))
                          fs.delete(out, true);
 
-                 //SequenceFileOutputFormat.setOutputPath(job, out);
                  FileOutputFormat.setOutputPath(job, out);
                  FileInputFormat.addInputPath(job, in);
                  
                  job.setInputFormatClass(SequenceFileInputFormat.class);
-                 //job.setInputFormatClass(TextInputFormat.class);
                  
                  job.setOutputFormatClass(SequenceFileOutputFormat.class);
-                 //job.setOutputFormatClass(TextOutputFormat.class);
                  job.setOutputKeyClass(GrowthNode.class);
                  job.setOutputValueClass(VertexWritable.class);
                  

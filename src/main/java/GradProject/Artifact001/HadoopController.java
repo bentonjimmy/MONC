@@ -17,20 +17,20 @@ public class HadoopController implements DBController
 	
 	public HadoopController()
 	{
-		job = new KarateJob("/Users/jmb66/Documents/NJIT/GradProject/DataSets/KarateClub", "zachary_unweighted.txt");
 		resolutionOrder = new LinkedHashMap<Long, Double>();
 		networkList = new TreeMap<Long, ResultsHolder>();
 		factory = new StaticNodeFactory();
 	}
 	
-	public ArrayList<Node> run(Node node)
+	public ArrayList<Node> run(Node node, String path, String filename)
 	{
+		job = new KarateJob(path, filename);
 		ArrayList<Node> results = new ArrayList<Node>();
 		int increment;
 		DataNode dummy = new DataNode(0);
 		results.add(dummy);//Add dummy so that nodes are added starting at position 1
 		long growthnode = ((DataNode) node).getId();
-		job.runJob(growthnode, resolutionOrder, networkList);
+		job.runJob(growthnode, networkList);
 		
 		
 		//need to determine the color to assign the node
@@ -46,6 +46,7 @@ public class HadoopController implements DBController
 		//transform results into ArrayList<Node> using StaticNodeFactory
 		Set<Long> ls = networkList.keySet();//Should be in ascending order
 
+		double previousResolution = Double.MAX_VALUE;
 		for(Long l: ls)
 		{
 			//Create a data node
@@ -65,9 +66,18 @@ public class HadoopController implements DBController
 			{
 				dn.setColor(Color.RED);
 			}
-			else
+			else 
 			{
-				dn.setColor(new Color(255, (rh.getOrder()*increment), (rh.getOrder()*increment)));
+				//Check if the previous resolution was smaller than the current
+				if(previousResolution < rh.getResolution())
+				{
+					dn.setColor(new Color((rh.getOrder()*increment), (rh.getOrder()*increment), 255));
+				}
+				else
+				{
+					dn.setColor(new Color(255, (rh.getOrder()*increment), (rh.getOrder()*increment)));
+				}
+				previousResolution = rh.getResolution();
 			}
 			//set the node's resolution
 			dn.setResolution(rh.getResolution());
