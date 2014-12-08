@@ -87,7 +87,7 @@ public class DataNode implements Node {
 	}
 	public String toString()
 	{
-		return "V"+id;
+		return label;
 	}
 	
 	public double getResolution() {

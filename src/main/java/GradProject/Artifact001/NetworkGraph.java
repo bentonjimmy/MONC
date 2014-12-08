@@ -11,12 +11,16 @@ import javax.swing.JPanel;
 import org.apache.commons.collections15.Transformer;
 
 import edu.uci.ics.jung.algorithms.layout.CircleLayout;
+import edu.uci.ics.jung.algorithms.layout.ISOMLayout;
 import edu.uci.ics.jung.algorithms.layout.Layout;
+import edu.uci.ics.jung.algorithms.layout.SpringLayout;
 import edu.uci.ics.jung.graph.Graph;
 import edu.uci.ics.jung.graph.SparseMultigraph;
 import edu.uci.ics.jung.visualization.VisualizationViewer;
 import edu.uci.ics.jung.visualization.control.DefaultModalGraphMouse;
 import edu.uci.ics.jung.visualization.control.ModalGraphMouse.Mode;
+import edu.uci.ics.jung.visualization.decorators.ToStringLabeller;
+import edu.uci.ics.jung.visualization.renderers.Renderer.VertexLabel.Position;
 
 public class NetworkGraph implements DrawGraph {
 
@@ -47,7 +51,7 @@ public class NetworkGraph implements DrawGraph {
 			}
 		}
 		
-		layout = new CircleLayout<DataNode, String>(graph);
+		layout = new SpringLayout<DataNode, String>(graph);
 	
 		vv = new VisualizationViewer<DataNode,String>(layout);
 		
@@ -60,6 +64,8 @@ public class NetworkGraph implements DrawGraph {
 				};
 				
 		vv.getRenderContext().setVertexFillPaintTransformer(vertexPaint);
+		vv.getRenderContext().setVertexLabelTransformer(new ToStringLabeller<DataNode>());
+		//vv.getRenderer().getVertexLabelRenderer().setPosition(Position.CNTR);
 		
 		// Create a graph mouse and add it to the visualization component
 		DefaultModalGraphMouse<DataNode, String> gm = new DefaultModalGraphMouse<DataNode, String>();

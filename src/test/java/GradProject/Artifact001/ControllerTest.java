@@ -24,13 +24,11 @@ public class ControllerTest {
 		parameters.setRepresentsIDs(null);
 		DataNode t1 = (DataNode) nodefactory.makeNode(type, parameters);
 		
-		assertTrue("Screen refresh before updating model", controller.refreshView() == false);
-		ArrayList<Node> list = controller.updateModel(t1, "drilldown");
+		ArrayList<Node> list = controller.updateModel(t1, "retrieve");
 		assertTrue("Returned size - 1", list.size() == 1);
 		DataNode returned = (DataNode) list.get(0);
 		assertTrue("Check returned ID", returned.getId() == t1.getId());
 		assertTrue("Check returned label", returned.getLabel().equalsIgnoreCase(t1.getLabel()));
-		assertTrue("Screen refresh after updating model", controller.refreshView() == false);
 	}
 	
 	@Test
@@ -51,7 +49,7 @@ public class ControllerTest {
 		parameters.setRepresentsIDs(null);
 		DataNode sending1 = (DataNode) nodefactory.makeNode(type, parameters);
 		
-		ArrayList<Node> list = controller.updateModel(sending1, "drilldown");
+		ArrayList<Node> list = controller.updateModel(sending1, "retrieve");
 		assertTrue("Received list", list.size() == 25);
 		//Check IDs of received nodes
 		int testID = 2;

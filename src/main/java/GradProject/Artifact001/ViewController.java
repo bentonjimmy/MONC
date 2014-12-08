@@ -29,7 +29,7 @@ public class ViewController
 		if(nodeID != nid) //Retrieve new data
 		{
 			DataNode dn = new DataNode(nodeID);
-			nodes = controller.updateModel(dn, "Retrieve");
+			nodes = controller.updateModel(dn, "retrieve");
 			changeGraph(style);
 		}
 		else //We are already using this node
@@ -47,6 +47,36 @@ public class ViewController
 		DrawGraph graph = gf.makeGraph(nodes, this.style);
 		thePanel = graph.plotData();
 		return thePanel;
+	}
+
+
+	public Dimension getDim() {
+		return dim;
+	}
+
+
+	public void setDim(Dimension dim) {
+		this.dim = dim;
+	}
+
+
+	public String getStyle() {
+		return style;
+	}
+
+
+	public void setStyle(String style) {
+		this.style = style;
+	}
+
+
+	public Controller getController() {
+		return controller;
+	}
+
+
+	public void setController(Controller controller) {
+		this.controller = controller;
 	}
 	
 }

@@ -24,4 +24,20 @@ public class Controller
 		return null;
 	}
 
+	public SQLAdapter getSa() {
+		return sa;
+	}
+
+	public void setSa(SQLAdapter sa) {
+		this.sa = sa;
+	}
+
+	public ViewController getVc() {
+		return vc;
+	}
+
+	public void setVc(ViewController vc) {
+		this.vc = vc;
+	}
+
 }
