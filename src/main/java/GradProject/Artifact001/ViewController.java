@@ -15,6 +15,9 @@ public class ViewController
 	private Controller controller;
 	private JPanel thePanel;
 	
+	public static final String NETWORK_GRAPH = new String("Network");
+	public static final String DENDROGRAM_GRAPH = new String("Dendrogram");
+	
 	public ViewController(Dimension dim)
 	{
 		this.dim = dim;
@@ -42,10 +45,14 @@ public class ViewController
 	//Changing from one graph to another
 	public JPanel changeGraph(String style)
 	{
-		this.style = style;
-		System.out.println("ViewController: Changing graph type to: " + style);
-		DrawGraph graph = gf.makeGraph(nodes, this.style);
-		thePanel = graph.plotData();
+		//only change the graph if it wasn't already set to that type
+		if(this.style.equalsIgnoreCase(style) == false)
+		{
+			this.style = style;
+			System.out.println("ViewController: Changing graph type to: " + style);
+			DrawGraph graph = gf.makeGraph(nodes, this.style);
+			thePanel = graph.plotData();
+		}
 		return thePanel;
 	}
 

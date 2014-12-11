@@ -23,6 +23,10 @@ public class StaticGraphFactory implements GraphFactory
 		{
 			return new NetworkGraph(nodes);
 		}
+		else if(type.equalsIgnoreCase("network"))
+		{
+			return new Dendogram(nodes);
+		}
 		else
 			return null;
 	}

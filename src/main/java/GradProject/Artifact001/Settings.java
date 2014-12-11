@@ -1,33 +1,27 @@
 package GradProject.Artifact001;
 
 /**
- * Settings class that is used to create individual settings.
+ * Settings class manages settings needed by different modules in the application
  * @author Jim Benton
  *
  */
-public class Settings{
-	//Interacts with Jackson
-	public String getName() {
-		return _name;
+public class Settings
+{
+
+	public String getFileName() {
+		return fileName;
 	}
-	public void setName(String name) {
-		this._name = name;
+	public void setFileName(String fileName) {
+		this.fileName = fileName;
 	}
-	public String getType() {
-		return _type;
+	public String getFilePath() {
+		return filePath;
 	}
-	public void setType(String type) {
-		this._type = type;
-	}
-	public String getValue() {
-		return _value;
-	}
-	public void setValue(String value) {
-		this._value = value;
+	public void setFilePath(String filePath) {
+		this.filePath = filePath;
 	}
 	
-	private String _name;
-	private String _type;
-	private String _value;
+	private String fileName = null;
+	private String filePath = null;
 
 }

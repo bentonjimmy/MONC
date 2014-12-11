@@ -3,6 +3,7 @@ package GradProject.Artifact001;
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -12,7 +13,7 @@ import javax.swing.text.Document;
 import javax.swing.JTextPane;
 import javax.swing.JTextField;
 
-public class NodeSelectionDialog extends JDialog {
+public class NodeSelectionDialog extends JDialog implements ActionListener{
 
 	private final JPanel contentPanel = new JPanel();
 	private JTextField tfNodeLabel;
@@ -51,15 +52,28 @@ public class NodeSelectionDialog extends JDialog {
 				okButton.setActionCommand("OK");
 				buttonPane.add(okButton);
 				getRootPane().setDefaultButton(okButton);
+				okButton.addActionListener(this);
 			}
 			{
 				cancelButton = new JButton("Cancel");
 				cancelButton.setActionCommand("Cancel");
 				buttonPane.add(cancelButton);
+				cancelButton.addActionListener(this);
 			}
 		}
 	}
 	
+	/**
+	 * Displays the dialog
+	 * @return
+	 */
+	public Integer showDialog()
+	{
+		nodeID = null;
+		setVisible(true);
+		
+		return nodeID;
+	}
 	
 	public void actionPerformed(ActionEvent e)
 	{
@@ -68,7 +82,17 @@ public class NodeSelectionDialog extends JDialog {
 		{
 			Document doc = tfNodeLabel.getDocument();
 			String text = doc.toString();
-			nodeID = Integer.getInteger(text);
+			if(text.trim().isEmpty() == false) //A value was entered
+			{
+				try
+				{
+					nodeID = Integer.getInteger(text);
+				}
+				catch(NumberFormatException nfe)
+				{
+					System.err.println("Value entered is not an integer");
+				}
+			}
 		}
 		setVisible(false);
 	}

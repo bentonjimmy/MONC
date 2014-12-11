@@ -5,6 +5,7 @@ import java.util.ArrayList;
 public class SQLAdapter 
 {
 	private HadoopController controller;
+	private Settings settings;
 	
 	public SQLAdapter()
 	{
@@ -19,6 +20,12 @@ public class SQLAdapter
 		return nodes;
 	}
 	
-	public void upALevel(){}
+	public Settings getSettings() {
+		return settings;
+	}
+
+	public void setSettings(Settings settings) {
+		this.settings = settings;
+	}
 
 }
