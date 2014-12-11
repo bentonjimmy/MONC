@@ -24,14 +24,15 @@ import javax.swing.JRadioButtonMenuItem;
 public class MoncFrame extends JFrame {
 
 	protected static MoncFrame frame;
-	protected JPanel contentPane;
+	protected JPanel graphPanel;
 	protected JFileChooser filechooser;
 	private Integer nodeID;
-	private Settings settings = new Settings();
+	private static Settings settings = new Settings();
 	private ViewController vc;
 	protected JRadioButtonMenuItem rdbtnNetwork;
 	protected JRadioButtonMenuItem rdbtnDendrogram;
 	private String className = "MoncFrame";
+	private String graphType = ViewController.NETWORK_GRAPH;
 
 	/**
 	 * Launch the application.
@@ -41,6 +42,10 @@ public class MoncFrame extends JFrame {
 			public void run() {
 				try {
 					ViewController cont = new ViewController(Toolkit.getDefaultToolkit().getScreenSize());
+					SQLAdapter adapter = new SQLAdapter();
+					adapter.setSettings(settings);
+					Controller controller = new Controller(cont, adapter);
+					cont.setController(controller);
 					frame = new MoncFrame(cont);
 					frame.setVisible(true);
 				} catch (Exception e) {
@@ -58,6 +63,7 @@ public class MoncFrame extends JFrame {
 		this.vc = vc;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(50, 50, vc.getDim().width-100, vc.getDim().height-100);
+		this.getContentPane().setLayout(new BorderLayout());
 		
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
@@ -97,7 +103,8 @@ public class MoncFrame extends JFrame {
 		bttngroup.add(rdbtnDendrogram);
 		
 		filechooser = new JFileChooser();
-		contentPane = new JPanel();
+		graphPanel = new JPanel();
+		this.getContentPane().add(graphPanel, BorderLayout.CENTER);
 	}
 	
 	class ExitListener implements ActionListener
@@ -143,15 +150,25 @@ public class MoncFrame extends JFrame {
 		@Override
 		public void actionPerformed(ActionEvent e)
 		{
-			NodeSelectionDialog dialog = new NodeSelectionDialog();
-			//Integer results = dialog.showDialog();
 			String results = JOptionPane.showInputDialog(MoncFrame.this, "Enter the label of the seed node:", "Enter Seed Node", JOptionPane.PLAIN_MESSAGE);
 			if(results != null) //Test if user Canceled the OptionPane
 			{
+				nodeID = null;
 				if(results.trim().isEmpty() == false) //A value was entered
 				{
 					//returns a null value if the result is not an integer
-					nodeID = Integer.getInteger(results);
+					try
+					{
+						nodeID = Integer.valueOf(results);
+					}
+					catch(NumberFormatException nfe)
+					{
+						System.err.println("Non-Integer value entered");
+					}
+					if(nodeID != null)
+					{
+						processData();
+					}
 				}
 				else
 				{
@@ -173,18 +190,21 @@ public class MoncFrame extends JFrame {
 			if(e.getSource() == rdbtnNetwork && settings.getFileName() != null) //The the network button is pressed
 			{
 				System.out.println(className+": Changing to network graph");
-				contentPane = vc.changeGraph(ViewController.NETWORK_GRAPH);
+				graphType = ViewController.NETWORK_GRAPH;
+				graphPanel = vc.changeGraph(graphType);
 			}
 			else if(e.getSource() == rdbtnDendrogram && settings.getFileName() != null) //Dendrogram button pressed
 			{
 				System.out.println(className+": Changing to dendrogram graph");
-				contentPane = vc.changeGraph(ViewController.DENDROGRAM_GRAPH);
+				graphType = ViewController.DENDROGRAM_GRAPH;
+				graphPanel = vc.changeGraph(graphType);
 			}
 			else
 			{
-				System.err.println(className+": Error in Graph Selection");
+				System.err.println(className+": Error in Graph Selection or no data selected");
 			}
-			frame.add(contentPane);
+			frame.getContentPane().add(graphPanel, BorderLayout.CENTER);
+			frame.revalidate();
 			
 		}
 		
@@ -196,6 +216,14 @@ public class MoncFrame extends JFrame {
 
 	public void setSettings(Settings settings) {
 		this.settings = settings;
+	}
+	
+	protected void processData()
+	{
+		graphPanel = vc.updateView(nodeID, graphType);
+		frame.getContentPane().add(graphPanel, BorderLayout.CENTER);
+		frame.revalidate();
+		
 	}
 
 }

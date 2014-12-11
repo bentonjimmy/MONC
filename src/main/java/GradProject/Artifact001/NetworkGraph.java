@@ -65,7 +65,7 @@ public class NetworkGraph implements DrawGraph {
 				
 		vv.getRenderContext().setVertexFillPaintTransformer(vertexPaint);
 		vv.getRenderContext().setVertexLabelTransformer(new ToStringLabeller<DataNode>());
-		//vv.getRenderer().getVertexLabelRenderer().setPosition(Position.CNTR);
+		vv.getRenderer().getVertexLabelRenderer().setPosition(Position.CNTR);
 		
 		// Create a graph mouse and add it to the visualization component
 		DefaultModalGraphMouse<DataNode, String> gm = new DefaultModalGraphMouse<DataNode, String>();

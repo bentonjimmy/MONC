@@ -1,6 +1,7 @@
 package GradProject.Artifact001;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
@@ -38,13 +39,12 @@ public class KarateJob
 	 public void runJob(long growthnode, TreeMap<Long, ResultsHolder> nodeList)
      {
 		 int depth = 0;
-		 String outpath = new String(filepath+"/depth_");
 		 
 		try 
 		{
-			depth = hadoopJob(growthnode, outpath);
+			depth = hadoopJob(growthnode, filepath);
 			parseFirstResults(filepath, nodeList);
-			parseResults(depth, outpath, nodeList);
+			parseResults(depth, filepath+"/depth_", nodeList);
 		} catch (ClassNotFoundException | IOException | InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -150,10 +150,14 @@ public class KarateJob
      InterruptedException, ClassNotFoundException 
 	 {
 		 int depth = 1;
+		 String outpathdepth = new String(filepath+"/depth_");
 
 		 Configuration conf = new Configuration();
          conf.set("recursion.depth", depth + "");
          conf.set("growthnode", Long.toString(growthnode));
+         File file = new File(outpath+"/text-r-00000");
+         file.delete();
+         conf.set("textoutput", outpath);
          Job job = new Job(conf);
          job.setJobName("Karate Club");
 
@@ -162,7 +166,7 @@ public class KarateJob
          job.setJarByClass(DataImporter.class);
 
          Path in = new Path(filepath+"/"+filename);
-         Path out = new Path(outpath + depth);
+         Path out = new Path(outpathdepth + depth);
          
          FileInputFormat.addInputPath(job, in);
          FileSystem fs = FileSystem.get(conf);
@@ -198,7 +202,7 @@ public class KarateJob
                  job.setJarByClass(KarateMapper.class);
 
                  in = new Path(filepath+"/depth_" + (depth - 1) + "/");
-                 out = new Path(outpath + depth);
+                 out = new Path(outpathdepth + depth);
                  
                  if (fs.exists(out))
                          fs.delete(out, true);

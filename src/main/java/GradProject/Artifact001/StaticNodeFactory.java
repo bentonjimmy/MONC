@@ -34,10 +34,12 @@ public class StaticNodeFactory implements NodeFactory {
 		{
 			if(type.equalsIgnoreCase("datanode"))
 			{
-				DataNode dn = new DataNode();
 				DataNodeParameters params = (DataNodeParameters)parameters;
-				dn.setId(params.getId());
-				dn.setLabel(params.getLabel());
+				DataNode dn = new DataNode(params.getId());
+				if(params.getLabel() != null)
+				{
+					dn.setLabel(params.getLabel());
+				}
 				dn.setRepresents(params.getRepresents());
 				ArrayList<Long> represents = new ArrayList<Long>();
 				if(params.getRepresents() > 1)

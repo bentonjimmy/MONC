@@ -10,7 +10,7 @@ public class ViewController
 	private Dimension dim;
 	private StaticGraphFactory gf;
 	private ArrayList<Node> nodes;
-	private String style;
+	private String style = "";
 	private int nid = -1;
 	private Controller controller;
 	private JPanel thePanel;
@@ -31,9 +31,10 @@ public class ViewController
 	{
 		if(nodeID != nid) //Retrieve new data
 		{
+			nid = nodeID;
 			DataNode dn = new DataNode(nodeID);
 			nodes = controller.updateModel(dn, "retrieve");
-			changeGraph(style);
+			createGraph(style);
 		}
 		else //We are already using this node
 		{
@@ -48,14 +49,18 @@ public class ViewController
 		//only change the graph if it wasn't already set to that type
 		if(this.style.equalsIgnoreCase(style) == false)
 		{
-			this.style = style;
-			System.out.println("ViewController: Changing graph type to: " + style);
-			DrawGraph graph = gf.makeGraph(nodes, this.style);
-			thePanel = graph.plotData();
+			createGraph(style);
 		}
 		return thePanel;
 	}
 
+	private void createGraph(String style)
+	{
+		this.style = style;
+		System.out.println("ViewController: Changing graph type to: " + style);
+		DrawGraph graph = gf.makeGraph(nodes, this.style);
+		thePanel = graph.plotData();
+	}
 
 	public Dimension getDim() {
 		return dim;

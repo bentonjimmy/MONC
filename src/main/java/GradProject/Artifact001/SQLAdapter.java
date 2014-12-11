@@ -15,7 +15,9 @@ public class SQLAdapter
 	public ArrayList<Node> drillDown(Node node)
 	{
 		ArrayList<Node> nodes;
-		nodes = controller.run(node, "/Users/jmb66/Documents/NJIT/GradProject/DataSets/KarateClub", "zachary_unweighted.txt");
+		System.out.println("SQLAdapter: Drill down on node: "+node.toString());
+		//nodes = controller.run(node, "/Users/jmb66/Documents/NJIT/GradProject/DataSets/KarateClub", "zachary_unweighted.txt");
+		nodes = controller.run(node, settings.getFilePath(), settings.getFileName());
 		
 		return nodes;
 	}
