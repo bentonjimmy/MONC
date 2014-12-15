@@ -1,110 +1,129 @@
 package GradProject.Artifact001;
-
-import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Paint;
-import java.awt.Stroke;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Insets;
+import java.util.ArrayList;
+import java.util.Random;
 
 import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
 
-import org.apache.commons.collections15.Transformer;
+class Surface extends JPanel {
 
-import edu.uci.ics.jung.algorithms.layout.CircleLayout;
-import edu.uci.ics.jung.algorithms.layout.Layout;
-import edu.uci.ics.jung.graph.Graph;
-import edu.uci.ics.jung.graph.SparseMultigraph;
-import edu.uci.ics.jung.graph.util.EdgeType;
-import edu.uci.ics.jung.visualization.BasicVisualizationServer;
-import edu.uci.ics.jung.visualization.VisualizationViewer;
-import edu.uci.ics.jung.visualization.control.DefaultModalGraphMouse;
-import edu.uci.ics.jung.visualization.control.ModalGraphMouse.Mode;
-import edu.uci.ics.jung.visualization.decorators.ToStringLabeller;
-import edu.uci.ics.jung.visualization.renderers.Renderer.VertexLabel.Position;
+    private void doDrawing(Graphics g) {
 
-public class BasicGraphCreation {
-	
-	static Graph<Integer, String> g;
-	static Graph<Integer, String> g2;
+        Graphics2D g2d = (Graphics2D) g;
 
-	public static void main(String[] args) 
-	{
-		 // Graph<V, E> where V is the type of the vertices
-		// and E is the type of the edges
-		g = new SparseMultigraph<Integer, String>();
-		// Add some vertices. From above we defined these to be type Integer.
-		g.addVertex((Integer)1);
-		g.addEdge("Edge-A", 1, 2); // Note that Java 1.5 auto-boxes primitives
-		g.addVertex((Integer)2);
-		g.addEdge("Edge-B", 2, 3);
-		g.addVertex((Integer)3);
-		// Add some edges. From above we defined these to be of type String
-		// Note that the default is for undirected edges.
-		
-		
-		// Let's see what we have. Note the nice output from the
-		// SparseMultigraph<V,E> toString() method
-		System.out.println("The graph g = " + g.toString());
-		// Note that we can use the same nodes and edges in two different graphs.
-		g2 = new SparseMultigraph<Integer, String>();
-		g2.addVertex((Integer)1);
-		g2.addVertex((Integer)2);
-		g2.addVertex((Integer)3);
-		g2.addEdge("Edge-A", 1,3);
-		g2.addEdge("Edge-B", 2,3, EdgeType.DIRECTED);
-		g2.addEdge("Edge-C", 3, 2, EdgeType.DIRECTED);
-		g2.addEdge("Edge-P", 2,3); // A parallel edge
-		System.out.println("The graph g2 = " + g2.toString()); 
-		
-		BasicGraphCreation sgv = new BasicGraphCreation(); // This builds the graph
-		// Layout<V, E>, BasicVisualizationServer<V,E>
-		Layout<Integer, String> layout = new CircleLayout(sgv.g);
-		layout.setSize(new Dimension(300,300));
-		 VisualizationViewer<Integer,String> vv =
-				 new VisualizationViewer<Integer,String>(layout);
-		vv.setPreferredSize(new Dimension(350,350));
-		// Setup up a new vertex to paint transformer...
-		
-		Transformer<Integer,Paint> vertexPaint = new Transformer<Integer,Paint>() 
-				{
-					public Paint transform(Integer i) 
-					{
-						//return Color.GREEN;
-						return new Color(255, 200, 200);
-					}
-				};
-		// Set up a new stroke Transformer for the edges
-		float dash[] = {10.0f};
-		final Stroke edgeStroke = new BasicStroke(1.0f, BasicStroke.CAP_BUTT,
-		BasicStroke.JOIN_MITER, 10.0f, dash, 0.0f);
-		Transformer<String, Stroke> edgeStrokeTransformer =
-		new Transformer<String, Stroke>() {
-		public Stroke transform(String s) {
-		return edgeStroke;
-		}
-		};
-		
-		
-		vv.getRenderContext().setVertexFillPaintTransformer(vertexPaint);
-		vv.getRenderContext().setEdgeStrokeTransformer(edgeStrokeTransformer);
-		vv.getRenderContext().setVertexLabelTransformer(new ToStringLabeller());
-		vv.getRenderContext().setEdgeLabelTransformer(new ToStringLabeller());
-		vv.getRenderer().getVertexLabelRenderer().setPosition(Position.CNTR);
-		
-		// Show vertex and edge labels
-		vv.getRenderContext().setVertexLabelTransformer(new ToStringLabeller());
-		vv.getRenderContext().setEdgeLabelTransformer(new ToStringLabeller());
-		// Create a graph mouse and add it to the visualization component
-		DefaultModalGraphMouse gm = new DefaultModalGraphMouse();
-		
-		gm.setMode(Mode.TRANSFORMING);
-		vv.setGraphMouse(gm); 
-		JFrame frame = new JFrame("Simple Graph View 2");
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.getContentPane().add(vv);
-		frame.pack();
-		frame.setVisible(true);  
+        g2d.setColor(Color.blue);
 
-	}
+        Dimension size = getSize();
+        Insets insets = getInsets();
 
+        int w = size.width - insets.left - insets.right;
+        int h = size.height - insets.top - insets.bottom;
+
+        Random r = new Random();
+
+        for (int i = 0; i < 1000; i++) {
+
+            int x = Math.abs(r.nextInt()) % w;
+            int y = Math.abs(r.nextInt()) % h;
+            g2d.drawLine(x, y, x, y);
+        }
+    }
+    
+
+    @Override
+    public void paintComponent(Graphics g) {
+
+        super.paintComponent(g);
+        doDrawing(g);
+    }
+}
+
+public class BasicGraphCreation extends JFrame {
+
+    public BasicGraphCreation() {
+
+        initUI();
+    }
+
+    private void initUI() {
+        
+        setTitle("Points");
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        //DataNode dn0 = new DataNode(0);
+		DataNode dn1 = new DataNode(1);
+		DataNode dn2 = new DataNode(2);
+		DataNode dn3 = new DataNode(3);
+		DataNode dn4 = new DataNode(4);
+		DataNode dn5 = new DataNode(5);
+		
+		dn2.setColor(new Color(255, 0, 0));
+		dn2.addConnection(1);
+		dn2.addConnection(3);
+		dn2.addConnection(4);
+		dn2.setOrder(0);
+		dn2.setResolution(0);
+		
+		dn4.setColor(new Color(255, 51, 51));
+		dn4.addConnection(2);
+		dn4.addConnection(3);
+		dn4.addConnection(5);
+		dn4.setOrder(1);
+		dn4.setResolution(3.610);
+		
+		dn3.setColor(new Color(255, 102, 102));
+		dn3.addConnection(2);
+		dn3.addConnection(4);
+		dn3.addConnection(5);
+		dn3.setOrder(2);
+		dn3.setResolution(1.492);
+		
+		dn5.setColor(new Color(255, 153, 153));
+		dn5.addConnection(1);
+		dn5.addConnection(3);
+		dn5.addConnection(4);
+		dn5.setOrder(3);
+		dn5.setResolution(1.518);
+		
+		dn1.setColor(new Color(255, 204, 204));
+		dn1.addConnection(2);
+		dn1.addConnection(5);
+		dn1.setOrder(4);
+		dn1.setResolution(2.079);
+		
+		
+		ArrayList<Node> nodelist = new ArrayList<Node>();
+		//nodelist.add(dn0);
+		nodelist.add(dn1);
+		nodelist.add(dn2);
+		nodelist.add(dn3);
+		nodelist.add(dn4);
+		nodelist.add(dn5);
+		
+		
+		Dendogram ng = new Dendogram(nodelist);
+        //add(new Surface());
+		add(ng);
+
+        setSize(500, 500);
+        setLocationRelativeTo(null);
+    }
+
+    public static void main(String[] args) {
+
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+
+                BasicGraphCreation ps = new BasicGraphCreation();
+                ps.setVisible(true);
+            }
+        });
+    }
 }

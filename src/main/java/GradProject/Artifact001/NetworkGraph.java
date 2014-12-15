@@ -1,6 +1,7 @@
 package GradProject.Artifact001;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Paint;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -12,6 +13,7 @@ import org.apache.commons.collections15.Transformer;
 
 import edu.uci.ics.jung.algorithms.layout.CircleLayout;
 import edu.uci.ics.jung.algorithms.layout.ISOMLayout;
+import edu.uci.ics.jung.algorithms.layout.KKLayout;
 import edu.uci.ics.jung.algorithms.layout.Layout;
 import edu.uci.ics.jung.algorithms.layout.SpringLayout;
 import edu.uci.ics.jung.graph.Graph;
@@ -25,7 +27,7 @@ import edu.uci.ics.jung.visualization.renderers.Renderer.VertexLabel.Position;
 public class NetworkGraph implements DrawGraph {
 
 	private Graph<DataNode, String> graph;
-	private Layout<DataNode, String> layout;
+	private KKLayout<DataNode, String> layout;
 	private VisualizationViewer<DataNode,String> vv;
 	
 	public NetworkGraph(ArrayList<Node> nodes)
@@ -51,7 +53,8 @@ public class NetworkGraph implements DrawGraph {
 			}
 		}
 		
-		layout = new SpringLayout<DataNode, String>(graph);
+		layout = new KKLayout<DataNode, String>(graph);
+		layout.setLengthFactor(1.1);
 	
 		vv = new VisualizationViewer<DataNode,String>(layout);
 		
@@ -73,7 +76,7 @@ public class NetworkGraph implements DrawGraph {
 		vv.setGraphMouse(gm); 
 	}
 	
-	public JPanel plotData() 
+	public JPanel plotData(Dimension dim) 
 	{
 		return vv;
 	}

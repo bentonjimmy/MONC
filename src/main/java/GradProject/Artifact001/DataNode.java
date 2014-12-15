@@ -98,6 +98,14 @@ public class DataNode implements Node {
 		this.resolution = resolution;
 	}
 
+	public int getOrder() {
+		return order;
+	}
+
+	public void setOrder(int order) {
+		this.order = order;
+	}
+
 	protected int represents;
 	protected ArrayList<Long> representsIDs;
 	protected long id;
@@ -106,5 +114,6 @@ public class DataNode implements Node {
 	protected Color color;
 	protected LinkedHashMap<Integer, Long> pointsTo;
 	private int pointsToNum;
+	private int order;
 	
 }

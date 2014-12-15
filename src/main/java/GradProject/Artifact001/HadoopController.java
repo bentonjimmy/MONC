@@ -81,6 +81,7 @@ public class HadoopController implements DBController
 			}
 			//set the node's resolution
 			dn.setResolution(rh.getResolution());
+			dn.setOrder(rh.getOrder());
 			results.add(dn);
 		}
 		

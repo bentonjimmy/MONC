@@ -3,6 +3,7 @@ package GradProject.Artifact001;
 import static org.junit.Assert.*;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.util.ArrayList;
 
 import javax.swing.JFrame;
@@ -10,7 +11,7 @@ import javax.swing.JPanel;
 
 import org.junit.Test;
 
-public class NetworkGraphTest {
+public class DendrogramTest {
 
 	@Test
 	public void threeNodeTest() 
@@ -27,29 +28,34 @@ public class NetworkGraphTest {
 		dn2.addConnection(3);
 		dn2.addConnection(4);
 		dn2.setOrder(0);
+		dn2.setResolution(0);
 		
 		dn4.setColor(new Color(255, 51, 51));
 		dn4.addConnection(2);
 		dn4.addConnection(3);
 		dn4.addConnection(5);
 		dn4.setOrder(1);
+		dn4.setResolution(3.610);
 		
 		dn3.setColor(new Color(255, 102, 102));
 		dn3.addConnection(2);
 		dn3.addConnection(4);
 		dn3.addConnection(5);
 		dn3.setOrder(2);
+		dn3.setResolution(1.492);
 		
 		dn5.setColor(new Color(255, 153, 153));
 		dn5.addConnection(1);
 		dn5.addConnection(3);
 		dn5.addConnection(4);
 		dn5.setOrder(3);
+		dn5.setResolution(1.518);
 		
 		dn1.setColor(new Color(255, 204, 204));
 		dn1.addConnection(2);
 		dn1.addConnection(5);
 		dn1.setOrder(4);
+		dn1.setResolution(2.079);
 		
 		
 		ArrayList<Node> nodelist = new ArrayList<Node>();
@@ -60,12 +66,14 @@ public class NetworkGraphTest {
 		nodelist.add(dn4);
 		nodelist.add(dn5);
 		
-		NetworkGraph ng = new NetworkGraph(nodelist);
-		JPanel jp = ng.plotData();
+		
+		Dendogram ng = new Dendogram(nodelist);
+		//JPanel jp = ng.plotData(new Dimension(500, 500));
 		
 		JFrame frame = new JFrame("Simple Graph View 2");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.getContentPane().add(jp);
+		frame.getContentPane().add(ng);
+		frame.repaint();
 		frame.pack();
 		frame.setVisible(true);  
 		System.out.println("Test of 5 nodes");
