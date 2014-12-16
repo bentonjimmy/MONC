@@ -6,6 +6,6 @@ import javax.swing.JPanel;
 
 public interface DrawGraph {
 
-	public JPanel plotData(Dimension dim);
+	public JPanel plotData();
 	
 }

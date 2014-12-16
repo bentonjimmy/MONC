@@ -74,9 +74,10 @@ public class NetworkGraph implements DrawGraph {
 		DefaultModalGraphMouse<DataNode, String> gm = new DefaultModalGraphMouse<DataNode, String>();
 		gm.setMode(Mode.TRANSFORMING);
 		vv.setGraphMouse(gm); 
+		vv.setBackground(Color.white);
 	}
 	
-	public JPanel plotData(Dimension dim) 
+	public JPanel plotData() 
 	{
 		return vv;
 	}

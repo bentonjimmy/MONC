@@ -74,14 +74,14 @@ public class BasicGraphCreation extends JFrame {
 		dn4.addConnection(2);
 		dn4.addConnection(3);
 		dn4.addConnection(5);
-		dn4.setOrder(1);
+		dn4.setOrder(2);
 		dn4.setResolution(3.610);
 		
 		dn3.setColor(new Color(255, 102, 102));
 		dn3.addConnection(2);
 		dn3.addConnection(4);
 		dn3.addConnection(5);
-		dn3.setOrder(2);
+		dn3.setOrder(1);
 		dn3.setResolution(1.492);
 		
 		dn5.setColor(new Color(255, 153, 153));
