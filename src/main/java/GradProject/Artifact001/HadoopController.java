@@ -69,7 +69,8 @@ public class HadoopController implements DBController
 			else 
 			{
 				//Check if the previous resolution was smaller than the current
-				if(previousResolution < rh.getResolution())
+				/*
+				if(previousResolution > rh.getResolution())
 				{
 					dn.setColor(new Color((rh.getOrder()*increment), (rh.getOrder()*increment), 255));
 				}
@@ -77,6 +78,8 @@ public class HadoopController implements DBController
 				{
 					dn.setColor(new Color(255, (rh.getOrder()*increment), (rh.getOrder()*increment)));
 				}
+				*/
+				dn.setColor(new Color(255, (rh.getOrder()*increment), (rh.getOrder()*increment)));
 				previousResolution = rh.getResolution();
 			}
 			//set the node's resolution
