@@ -62,7 +62,7 @@ public class MoncFrame extends JFrame {
 	{
 		this.vc = vc;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(50, 50, vc.getDim().width-100, vc.getDim().height-100);
+		setBounds(0, 0, vc.getDim().width-25, vc.getDim().height-25);
 		this.getContentPane().setLayout(new BorderLayout());
 		
 		JMenuBar menuBar = new JMenuBar();
