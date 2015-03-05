@@ -7,8 +7,17 @@ import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.Set;
 
+/**
+ * The DataNode implements the Node interface and represents a node in a network.  
+ * @author Jim Benton
+ *
+ */
 public class DataNode implements Node {
 	
+	/**
+	 * A no argument constructor for the DataNode class.  The initial color of the DataNode is set
+	 * to red.
+	 */
 	public DataNode()
 	{
 		pointsTo = new LinkedHashMap<Integer, Long>();
@@ -16,6 +25,11 @@ public class DataNode implements Node {
 		pointsToNum = 1;
 	}
 	
+	/**
+	 * This constructor takes a long number to construct the DataNode.  The long number is used to set
+	 * the ID of the DataNode being constructed.
+	 * @param id - the number used as the ID of the DataNode
+	 */
 	public DataNode(long id)
 	{
 		this();
@@ -23,6 +37,12 @@ public class DataNode implements Node {
 		this.label = Long.toString(id);
 	}
 	
+	/**
+	 * This constructor takes a long number and a String to construct the DataNode.  The long number is used to set
+	 * the ID of the DataNode being constructed.  The String argument is used to label the DataNode.
+	 * @param id - the number used as the ID of the DataNode
+	 * @param label - the label given to the DataNode
+	 */
 	public DataNode(long id, String label)
 	{
 		this();
@@ -30,6 +50,10 @@ public class DataNode implements Node {
 		this.label = label;
 	}
 	
+	/**
+	 * This creates a connection between this DataNode and the DataNode identified by connection.
+	 * @param connection
+	 */
 	public void addConnection(long connection)
 	{
 			pointsTo.put(pointsToNum, connection);
@@ -41,6 +65,11 @@ public class DataNode implements Node {
 		return pointsTo.get(position);
 	}
 	
+	/**
+	 * Sets all the connections for the DataNode.
+	 * @param connections - a LinkedHashMap of type <Integer, Long> used to create connections for the 
+	 * DataNode
+	 */
 	public void setConnections(LinkedHashMap<Integer, Long> connections)
 	{
 		if(connections != null)

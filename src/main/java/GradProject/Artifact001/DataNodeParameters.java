@@ -11,41 +11,6 @@ public class DataNodeParameters implements Parameters{
 	}
 	
 	
-	/**
-	 * Adds a parameter with the name <code>name</code> and the value <code>value</code>.
-	 * @param name - String used to reference the parameter
-	 * @param value - The value of the parameter
-	 */
-	/*
-	public void addParameter(String name, String value)
-	{
-		if(name != null && value != null)
-		{
-			_parameters.put(name, value);
-		}
-	}
-	*/
-	
-	/**
-	 * Retrieves the value of the parameter with the given <code>name</code>.  If not parameter
-	 * matches the name then <code>null</code> is returned.
-	 * @param name - the name of the parameter
-	 * @return - the String value associates with the parameter name
-	 */
-	/*
-	public String getParameter(String name)
-	{
-		if(name != null)
-		{
-			return _parameters.get(name);
-		}
-		else
-		{
-			return null;
-		}
-	}
-	*/
-	
 	public int getRepresents() {
 		return _represents;
 	}

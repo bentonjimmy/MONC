@@ -42,7 +42,7 @@ public class MoncFrame extends JFrame {
 			public void run() {
 				try {
 					ViewController cont = new ViewController(Toolkit.getDefaultToolkit().getScreenSize());
-					SQLAdapter adapter = new SQLAdapter();
+					Adapter adapter = new Adapter();
 					adapter.setSettings(settings);
 					Controller controller = new Controller(cont, adapter);
 					cont.setController(controller);

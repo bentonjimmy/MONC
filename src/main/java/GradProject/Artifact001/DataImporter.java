@@ -9,9 +9,15 @@ import org.apache.hadoop.mapreduce.Mapper;
 import org.apache.hadoop.mapreduce.Reducer.Context;
 import org.apache.hadoop.mapreduce.lib.output.MultipleOutputs;
 
+/**
+ * This class extends the Mapper class and is used to initially import the data used for processing.
+ * @author Jim Benton
+ *
+ */
 public class DataImporter extends Mapper<LongWritable, Text, GrowthNode, VertexWritable> 
 {
 	private MultipleOutputs<GrowthNode, VertexWritable> multiOut;
+	
 	protected void setup(Context context) throws IOException, InterruptedException
 	{
 		multiOut = new MultipleOutputs<GrowthNode, VertexWritable>(context);

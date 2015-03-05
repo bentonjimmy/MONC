@@ -2,19 +2,30 @@ package GradProject.Artifact001;
 
 import java.util.ArrayList;
 
+/**
+ * The Controller class is used to create a bridge for the data coming from the Adapter to the components
+ * used to visualize the data.  Its main job is receiving data from the adapter and telling the view components
+ * to update with the new data.
+ * @author Jim Benton
+ *
+ */
 public class Controller 
 {
-	private SQLAdapter sa;
+	private Adapter sa;
 	private ViewController vc;
 	
-	public Controller(ViewController vc, SQLAdapter sa)
+	public Controller(ViewController vc, Adapter sa)
 	{
 		this.vc = vc;
 		this.sa = sa;
 	}
 	
-	public void updateView(ArrayList<Node> nodelist){}
-	
+	/**
+	 * This method is used to retrieve new data based off a request from the view
+	 * @param node - the node selected by the user
+	 * @param action - the action that needs to be performed by the adapter
+	 * @return an ArrayList of type Node that is used to display updated results
+	 */
 	public ArrayList<Node> updateModel(Node node, String action)
 	{
 		if(action.equalsIgnoreCase("retrieve"))
@@ -24,11 +35,11 @@ public class Controller
 		return null;
 	}
 
-	public SQLAdapter getSa() {
+	public Adapter getSa() {
 		return sa;
 	}
 
-	public void setSa(SQLAdapter sa) {
+	public void setSa(Adapter sa) {
 		this.sa = sa;
 	}
 

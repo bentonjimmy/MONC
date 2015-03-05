@@ -12,7 +12,7 @@ public class ControllerTest {
 	@Test
 	public void singleNodeToModel()
 	{
-		SQLAdapter sqladapter = new SQLAdapter();
+		Adapter sqladapter = new Adapter();
 		ViewController viewController = new ViewController(new Dimension(300, 300));
 		Controller controller = new Controller(viewController, sqladapter);
 		StaticNodeFactory nodefactory = new StaticNodeFactory();
@@ -36,7 +36,7 @@ public class ControllerTest {
 	{
 		//Send multiple nodes
 		//Receive back nodes at lowest possible level
-		SQLAdapter sqladapter = new SQLAdapter();
+		Adapter sqladapter = new Adapter();
 		ViewController viewController = new ViewController(new Dimension(300, 300));
 		Controller controller = new Controller(viewController, sqladapter);
 		

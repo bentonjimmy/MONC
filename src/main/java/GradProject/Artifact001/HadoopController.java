@@ -44,7 +44,7 @@ public class HadoopController implements DBController
 			increment = 1;
 		}
 		//transform results into ArrayList<Node> using StaticNodeFactory
-		Set<Long> ls = networkList.keySet();//Should be in ascending order
+		Set<Long> ls = networkList.keySet();//In ascending order
 
 		double previousResolution = Double.MAX_VALUE;
 		for(Long l: ls)
@@ -68,17 +68,6 @@ public class HadoopController implements DBController
 			}
 			else 
 			{
-				//Check if the previous resolution was smaller than the current
-				/*
-				if(previousResolution > rh.getResolution())
-				{
-					dn.setColor(new Color((rh.getOrder()*increment), (rh.getOrder()*increment), 255));
-				}
-				else
-				{
-					dn.setColor(new Color(255, (rh.getOrder()*increment), (rh.getOrder()*increment)));
-				}
-				*/
 				dn.setColor(new Color(255, (rh.getOrder()*increment), (rh.getOrder()*increment)));
 				previousResolution = rh.getResolution();
 			}

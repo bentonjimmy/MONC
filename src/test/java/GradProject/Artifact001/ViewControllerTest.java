@@ -17,7 +17,7 @@ public class ViewControllerTest {
 		JFrame frame = new JFrame("Visual Test");
 		Dimension dim = new Dimension(350, 350);
 		ViewController vc = new ViewController(dim);
-		SQLAdapter adapter = new SQLAdapter();
+		Adapter adapter = new Adapter();
 		Controller controller = new Controller(vc, adapter);
 		vc.setController(controller);
 		
