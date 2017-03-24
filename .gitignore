@@ -1,0 +1,9 @@
+syntax: glob
+
+target
+build.number
+
+# intellij junk
+.idea
+*.iml
+.DS_Store
